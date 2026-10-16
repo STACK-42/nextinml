@@ -25,9 +25,7 @@ export function ProgramCard({ program }: { program: Program }) {
         </Link>
       </h3>
       {program.organizer && (
-        <p className="text-[13px] text-muted-foreground mb-3">
-          {program.organizer}
-        </p>
+        <p className="text-[13px] text-muted-foreground mb-3">{program.organizer}</p>
       )}
       <p className="text-sm text-foreground/75 mb-4 line-clamp-2 leading-relaxed">
         {program.description}

@@ -47,10 +47,7 @@ export function Logo({ size = 44, showWordmark = true }: LogoProps) {
       </svg>
       {showWordmark && (
         <div className="flex flex-col leading-none">
-          <span
-            className="text-[10px] font-light tracking-[0.25em]"
-            style={{ color: "#534AB7" }}
-          >
+          <span className="text-[10px] font-light tracking-[0.25em]" style={{ color: "#534AB7" }}>
             NEXT
           </span>
           <span className="text-lg font-extrabold tracking-tight">

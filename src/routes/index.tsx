@@ -18,8 +18,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "NextInML" },
       {
         property: "og:description",
-        content:
-          "Summer schools, fellowships, and internships for early-stage ML students.",
+        content: "Summer schools, fellowships, and internships for early-stage ML students.",
       },
     ],
   }),
@@ -49,25 +48,13 @@ function Index() {
           viewBox="0 0 900 900"
           fill="none"
         >
-          <path
-            d="M150 650 A300 300 0 0 1 750 650"
-            stroke="#534AB7"
-            strokeWidth="3"
-            fill="none"
-          />
-          <path
-            d="M260 680 A190 190 0 0 1 640 680"
-            stroke="#534AB7"
-            strokeWidth="3"
-            fill="none"
-          />
+          <path d="M150 650 A300 300 0 0 1 750 650" stroke="#534AB7" strokeWidth="3" fill="none" />
+          <path d="M260 680 A190 190 0 0 1 640 680" stroke="#534AB7" strokeWidth="3" fill="none" />
           <circle cx="450" cy="680" r="14" fill="#534AB7" />
         </svg>
 
         <div className="relative max-w-6xl mx-auto px-6 pt-20 pb-16 md:pt-28 md:pb-24 text-center">
-          <p className="eyebrow mb-5">
-            BUILT FOR STUDENTS OUTSIDE THE AMBIENT NETWORK
-          </p>
+          <p className="eyebrow mb-5">BUILT FOR STUDENTS OUTSIDE THE AMBIENT NETWORK</p>
           <h1 className="text-4xl md:text-6xl font-extrabold mb-6 max-w-4xl mx-auto leading-[1.12]">
             Your next step in ML
             <span className="block mt-1 text-2xl md:text-3xl font-bold text-foreground/75">
@@ -96,15 +83,8 @@ function Index() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-2">
-            {[
-              "50+ programs",
-              "30+ countries",
-              "100% free to access",
-            ].map((s) => (
-              <span
-                key={s}
-                className="pill bg-purple-50 text-primary text-[12px] font-medium"
-              >
+            {["50+ programs", "30+ countries", "100% free to access"].map((s) => (
+              <span key={s} className="pill bg-purple-50 text-primary text-[12px] font-medium">
                 {s}
               </span>
             ))}
@@ -145,9 +125,7 @@ function Index() {
                 {c.label}
               </p>
               <h3 className="text-xl font-bold mb-2">{c.title}</h3>
-              <p className="text-sm text-foreground/75 leading-relaxed mb-5">
-                {c.desc}
-              </p>
+              <p className="text-sm text-foreground/75 leading-relaxed mb-5">{c.desc}</p>
               <div className="flex items-center justify-between">
                 <span className="pill bg-teal-50 text-[var(--accent-dark)] text-[12px]">
                   {c.count} programs

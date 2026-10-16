@@ -1,8 +1,4 @@
-export type ProgramType =
-  | "Summer School"
-  | "Winter School"
-  | "Fellowship"
-  | "Internship";
+export type ProgramType = "Summer School" | "Winter School" | "Fellowship" | "Internship";
 
 export type ProgramFormat = "In-person" | "Remote" | "Hybrid";
 
@@ -64,8 +60,7 @@ export const mockPrograms: Program[] = [
       "The Mediterranean Machine Learning Summer School (M2L) is an intensive five-day program of keynotes, lectures, and hands-on practical sessions covering the core, fast-developing areas of modern machine learning. It is organized by a team of Google DeepMind scientists in collaboration with the Faculty of Electrical Engineering, Mechanical Engineering and Naval Architecture (FESB) at the University of Split, and is built around knowledge transfer between early-stage researchers and world-leading experts, with poster sessions, networking, and informal time with speakers.\n\nThe 5th edition (M2L 2025) ran September 8–12, 2025 in Split, Croatia and drew more than 300 young AI talents. The 2026 edition was cancelled; the next edition is planned for Spain in September 2027. Watch the official site for the 2027 public call and its application deadline.",
     eligibility:
       "Doctoral candidates and exceptional Master's and Bachelor's students, plus academics and practitioners worldwide, with emphasis on the Mediterranean region. A technical background and prior ML experience are expected. Selection is merit-based through a public call, with scholarships to promote diversity.",
-    cost:
-      "Students attend free of charge; academia and industry pay a symbolic registration fee. Diversity scholarships and targeted outreach are available.",
+    cost: "Students attend free of charge; academia and industry pay a symbolic registration fee. Diversity scholarships and targeted outreach are available.",
     topics: [
       "Natural Language Processing",
       "Computer Vision",

@@ -1,14 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
-import {
-  ArrowLeft,
-  CalendarDays,
-  Clock,
-  Globe,
-  MapPin,
-  ShieldCheck,
-} from "lucide-react";
+import { ArrowLeft, CalendarDays, Clock, Globe, MapPin, ShieldCheck } from "lucide-react";
 
 import { Nav } from "@/components/Nav";
 import { getPrograms } from "@/lib/airtable.functions";
@@ -72,12 +65,8 @@ function ProgramDetailPage() {
               </span>
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-extrabold mb-2">
-              {program.name}
-            </h1>
-            {program.organizer && (
-              <p className="text-muted-foreground mb-6">{program.organizer}</p>
-            )}
+            <h1 className="text-3xl md:text-4xl font-extrabold mb-2">{program.name}</h1>
+            {program.organizer && <p className="text-muted-foreground mb-6">{program.organizer}</p>}
 
             <div className="grid sm:grid-cols-3 gap-4 mb-8">
               <DetailStat icon={<CalendarDays className="h-4 w-4" />} label="Deadline">
@@ -107,19 +96,14 @@ function ProgramDetailPage() {
             </div>
 
             <p className="text-foreground/80 leading-relaxed mb-8 whitespace-pre-line">
-              {program.longDescription ||
-                program.description ||
-                "No description available yet."}
+              {program.longDescription || program.description || "No description available yet."}
             </p>
 
             {program.topics && program.topics.length > 0 && (
               <DetailSection title="Topics covered">
                 <div className="flex flex-wrap gap-2">
                   {program.topics.map((t) => (
-                    <span
-                      key={t}
-                      className="pill bg-teal-50 text-[var(--accent-dark)] text-[12px]"
-                    >
+                    <span key={t} className="pill bg-teal-50 text-[var(--accent-dark)] text-[12px]">
                       {t}
                     </span>
                   ))}
@@ -180,18 +164,10 @@ function DetailStat({
   );
 }
 
-function DetailSection({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function DetailSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mb-8">
-      <h2 className="text-sm font-bold uppercase tracking-wider text-primary mb-3">
-        {title}
-      </h2>
+      <h2 className="text-sm font-bold uppercase tracking-wider text-primary mb-3">{title}</h2>
       {children}
     </section>
   );

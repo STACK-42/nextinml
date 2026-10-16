@@ -27,6 +27,7 @@ bun install   # or: npm install
 ```bash
 bun run dev   # or: npm run dev
 ```
+
 > ![NOTE]
 > The server starts on port 8080. If that port is busy it takes the next free one, so check the startup log for the real URL.
 

@@ -46,18 +46,18 @@
 }
 
 :root {
-  --primary: #534AB7;
-  --accent: #1D9E75;
-  --accent-light: #5DCAA5;
-  --accent-dark: #0F6E56;
-  --foreground: #1A1A1A;
-  --background: #F8F7FF;
-  --surface: #FFFFFF;
-  --purple-50: #EEEDFE;
-  --teal-50: #E1F5EE;
-  --gray-50: #F1EFE8;
-  --border-color: #E8E7F5;
-  --muted-fg: #6B6880;
+  --primary: #534ab7;
+  --accent: #1d9e75;
+  --accent-light: #5dcaa5;
+  --accent-dark: #0f6e56;
+  --foreground: #1a1a1a;
+  --background: #f8f7ff;
+  --surface: #ffffff;
+  --purple-50: #eeedfe;
+  --teal-50: #e1f5ee;
+  --gray-50: #f1efe8;
+  --border-color: #e8e7f5;
+  --muted-fg: #6b6880;
 }
 
 @layer base {
@@ -74,7 +74,9 @@
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.15;
@@ -101,8 +103,13 @@
 }
 
 @keyframes signal-pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.65; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.65;
+  }
 }
 
 @utility signal-pulse {

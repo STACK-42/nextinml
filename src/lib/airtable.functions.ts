@@ -51,9 +51,7 @@ export const getPrograms = createServerFn({ method: "GET" }).handler(
       const all: AirtableRecord[] = [];
       let offset: string | undefined;
       do {
-        const url = new URL(
-          `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}`,
-        );
+        const url = new URL(`https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}`);
         if (offset) url.searchParams.set("offset", offset);
         const res = await fetch(url.toString(), {
           headers: { Authorization: `Bearer ${token}` },

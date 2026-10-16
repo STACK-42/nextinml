@@ -13,7 +13,8 @@ Read `nextinml-brief.md` before doing product or design work — it is the sourc
 A **discovery and access platform** for early-stage ML students (primary focus: MENA and Africa, global in scope) who have finished foundational coursework and don't know what concrete next step to take. It sits between "I finished my first ML course" and "I know what I'm doing with my career."
 
 It aggregates and contextualizes three opportunity types:
-- **ML summer/winter schools** — the practical learning tracks inside programs (M2L, MENA.ML, Data Science Africa, AMMI), *not* the conference schedules around them.
+
+- **ML summer/winter schools** — the practical learning tracks inside programs (M2L, MENA.ML, Data Science Africa, AMMI), _not_ the conference schedules around them.
 - **Research fellowships & mentorship programs** (MATS, SPAR, Pivotal, MARS, CBAI).
 - **Undergraduate-accessible internships** at research institutes and labs (e.g. MPIA).
 

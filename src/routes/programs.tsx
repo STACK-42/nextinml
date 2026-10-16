@@ -47,17 +47,13 @@ function ProgramsPage() {
       <Nav />
       <section className="max-w-6xl mx-auto px-6 py-12 md:py-16">
         <p className="eyebrow mb-3">Directory</p>
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-3">
-          All programs
-        </h1>
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-3">All programs</h1>
         <p className="text-muted-foreground mb-2">
           {isLoading
             ? "Loading…"
             : `Showing ${filtered.length} of ${programs.length} program${programs.length === 1 ? "" : "s"}`}
           {data?.source === "mock" && (
-            <span className="ml-2 text-xs italic">
-              (sample data — connect Airtable to go live)
-            </span>
+            <span className="ml-2 text-xs italic">(sample data — connect Airtable to go live)</span>
           )}
         </p>
 
@@ -72,9 +68,7 @@ function ProgramsPage() {
         {!isLoading && filtered.length === 0 && (
           <div className="text-center py-20">
             <p className="font-semibold text-lg mb-1">No programs found</p>
-            <p className="text-muted-foreground text-sm">
-              Try adjusting your filters
-            </p>
+            <p className="text-muted-foreground text-sm">Try adjusting your filters</p>
           </div>
         )}
       </section>

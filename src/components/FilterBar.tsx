@@ -149,10 +149,7 @@ export function FilterBar({ programs }: FilterBarProps) {
   );
 }
 
-export function filterPrograms(
-  programs: Program[],
-  filters: FilterState,
-): Program[] {
+export function filterPrograms(programs: Program[], filters: FilterState): Program[] {
   return programs.filter((p) => {
     if (filters.type && p.type !== filters.type) return false;
     if (filters.region && p.region !== filters.region) return false;
