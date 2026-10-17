@@ -1,0 +1,109 @@
+---
+import type { GetStaticPaths } from "astro";
+import { ArrowLeft, CalendarDays, Clock, Globe, MapPin, ShieldCheck } from "lucide-react";
+
+import Base from "@/layouts/Base.astro";
+import { getPrograms } from "@/lib/content";
+import { deadlineLabel, verifiedAgo, type Program } from "@/lib/programs";
+
+export const getStaticPaths = (async () => {
+  const programs = await getPrograms();
+  return programs.map((program) => ({ params: { id: program.id }, props: { program } }));
+}) satisfies GetStaticPaths;
+
+const { program } = Astro.props as { program: Program };
+
+const stats = [
+  { icon: CalendarDays, label: "Deadline", value: deadlineLabel(program) },
+  { icon: Globe, label: "Format", value: program.format },
+  { icon: MapPin, label: "Region", value: program.region },
+  { icon: MapPin, label: "Location", value: program.location },
+  { icon: CalendarDays, label: "Dates", value: program.dates },
+  { icon: Clock, label: "Duration", value: program.duration },
+].filter((s) => s.value);
+
+const sections = [
+  { title: "Who can apply", body: program.eligibility },
+  { title: "Cost & funding", body: program.cost },
+].filter((s) => s.body);
+---
+
+<Base title={`${program.name} · NextInML`} description={program.description}>
+  <section class="max-w-3xl mx-auto px-6 py-12 md:py-16">
+    <a
+      href="/programs"
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8"
+    >
+      <ArrowLeft className="h-4 w-4" />
+      All programs
+    </a>
+
+    <article>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="pill bg-purple-50 text-primary text-[11px] uppercase tracking-wide">
+          {program.type}
+        </span>
+        <span class="flex items-center gap-1.5 text-[12px] text-muted-foreground">
+          <ShieldCheck className="h-3.5 w-3.5 text-accent" />
+          {verifiedAgo(program.lastVerified)}
+        </span>
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-2">{program.name}</h1>
+      {program.organizer && <p class="text-muted-foreground mb-6">{program.organizer}</p>}
+
+      <div class="grid sm:grid-cols-3 gap-4 mb-8">
+        {
+          stats.map(({ icon: Icon, label, value }) => (
+            <div class="bg-surface border border-border rounded-lg p-4">
+              <p class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5">
+                <Icon className="h-4 w-4" />
+                {label}
+              </p>
+              <p class="font-semibold">{value}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="text-foreground/80 leading-relaxed mb-8 whitespace-pre-line">
+        {program.longDescription || program.description}
+      </p>
+
+      {
+        program.topics.length > 0 && (
+          <section class="mb-8">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-primary mb-3">
+              Topics covered
+            </h2>
+            <div class="flex flex-wrap gap-2">
+              {program.topics.map((t) => (
+                <span class="pill bg-teal-50 text-[var(--accent-dark)] text-[12px]">{t}</span>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        sections.map((s) => (
+          <section class="mb-8">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-primary mb-3">{s.title}</h2>
+            <p class="text-foreground/80 leading-relaxed whitespace-pre-line">{s.body}</p>
+          </section>
+        ))
+      }
+
+      <div class="mt-10">
+        <a
+          href={program.applicationUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="pill bg-accent text-white hover:bg-[var(--accent-dark)] transition-colors px-6 py-3 text-sm font-semibold"
+        >
+          Apply / Learn more →
+        </a>
+      </div>
+    </article>
+  </section>
+</Base>

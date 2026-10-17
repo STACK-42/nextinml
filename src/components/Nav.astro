@@ -1,0 +1,22 @@
+---
+import { Logo } from "./Logo";
+---
+
+<header class="sticky top-0 z-40 bg-surface/90 backdrop-blur border-b border-border">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center">
+      <Logo />
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm text-foreground/80">
+      <a href="/programs" class="hover:text-primary transition-colors">Browse</a>
+      <a href="#experiences" class="hover:text-primary transition-colors">Experiences</a>
+      <a href="#about" class="hover:text-primary transition-colors">About</a>
+    </div>
+    <a
+      href="#submit"
+      class="pill bg-accent text-white hover:bg-[var(--accent-dark)] transition-colors"
+    >
+      Submit experience
+    </a>
+  </nav>
+</header>

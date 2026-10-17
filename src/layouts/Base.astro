@@ -1,0 +1,42 @@
+---
+import "@/styles.css";
+import Nav from "@/components/Nav.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const defaultDescription =
+  "Summer schools, fellowships, and internships for early-stage ML students.";
+const { title = "NextInML", description = defaultDescription } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    />
+  </head>
+  <body>
+    <div class="min-h-screen">
+      <Nav />
+      <slot />
+      <footer class="border-t border-border py-10 text-center text-sm text-muted-foreground">
+        Built from inside the gap it closes.
+      </footer>
+    </div>
+  </body>
+</html>

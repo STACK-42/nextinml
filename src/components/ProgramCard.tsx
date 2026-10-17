@@ -1,7 +1,5 @@
-import { Link } from "@tanstack/react-router";
-
 import type { Program } from "@/lib/programs";
-import { formatDeadline, verifiedAgo } from "@/lib/programs";
+import { deadlineBadge, verifiedAgo } from "@/lib/programs";
 
 export function ProgramCard({ program }: { program: Program }) {
   return (
@@ -11,18 +9,14 @@ export function ProgramCard({ program }: { program: Program }) {
           {program.type}
         </span>
         <span className="inline-flex items-center font-mono text-[11px] px-2 py-1 rounded border border-primary/40 text-primary bg-surface">
-          {formatDeadline(program.deadline)}
+          {deadlineBadge(program)}
         </span>
       </div>
 
       <h3 className="text-lg font-bold leading-snug mb-1">
-        <Link
-          to="/programs/$programId"
-          params={{ programId: program.id }}
-          className="hover:text-primary transition-colors"
-        >
+        <a href={`/programs/${program.id}`} className="hover:text-primary transition-colors">
           {program.name}
-        </Link>
+        </a>
       </h3>
       {program.organizer && (
         <p className="text-[13px] text-muted-foreground mb-3">{program.organizer}</p>
@@ -45,13 +39,12 @@ export function ProgramCard({ program }: { program: Program }) {
           <span className="w-1.5 h-1.5 rounded-full bg-accent" />
           {verifiedAgo(program.lastVerified)}
         </span>
-        <Link
-          to="/programs/$programId"
-          params={{ programId: program.id }}
+        <a
+          href={`/programs/${program.id}`}
           className="text-[13px] font-medium text-accent hover:text-[var(--accent-dark)] transition-colors"
         >
           View details →
-        </Link>
+        </a>
       </div>
     </article>
   );

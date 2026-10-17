@@ -1,6 +1,3 @@
-"use client";
-
-import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { X } from "lucide-react";
 
 import {
@@ -12,22 +9,24 @@ import {
 } from "@/components/ui/select";
 import type { Program } from "@/lib/programs";
 
+export interface FilterState {
+  type: string;
+  region: string;
+  format: string;
+  deadline: string;
+}
+
+export const emptyFilters: FilterState = { type: "", region: "", format: "", deadline: "" };
+
 interface FilterBarProps {
   programs: Program[];
+  filters: FilterState;
+  onChange: (filters: FilterState) => void;
 }
-
-interface FilterState {
-  type?: string;
-  region?: string;
-  format?: string;
-  deadline?: string;
-}
-
-const routeApi = getRouteApi("/programs");
 
 // Radix Select forbids an empty-string item value (it's reserved for clearing
 // the selection), so we use this sentinel for the "All / Any" options and map
-// it back to undefined in the URL search params.
+// it back to an empty string in the filter state.
 const ALL = "all";
 
 const deadlineOptions = [
@@ -47,17 +46,7 @@ function extractUnique(programs: Program[], key: keyof Program): string[] {
   return Array.from(vals).sort();
 }
 
-export function FilterBar({ programs }: FilterBarProps) {
-  const navigate = useNavigate({ from: "/programs" });
-  const search = routeApi.useSearch();
-
-  const filters: FilterState = {
-    type: search.type ?? "",
-    region: search.region ?? "",
-    format: search.format ?? "",
-    deadline: search.deadline ?? "",
-  };
-
+export function FilterBar({ programs, filters, onChange }: FilterBarProps) {
   const types = extractUnique(programs, "type");
   const regions = extractUnique(programs, "region");
   const formats = extractUnique(programs, "format");
@@ -65,18 +54,7 @@ export function FilterBar({ programs }: FilterBarProps) {
   const activeCount = Object.values(filters).filter(Boolean).length;
 
   function updateFilter(key: keyof FilterState, value: string) {
-    navigate({
-      search: (prev: FilterState) => ({
-        ...prev,
-        [key]: value === ALL ? undefined : value || undefined,
-      }),
-    });
-  }
-
-  function clearFilters() {
-    navigate({
-      search: () => ({}),
-    });
+    onChange({ ...filters, [key]: value === ALL ? "" : value });
   }
 
   return (
@@ -138,7 +116,7 @@ export function FilterBar({ programs }: FilterBarProps) {
 
       {activeCount > 0 && (
         <button
-          onClick={clearFilters}
+          onClick={() => onChange(emptyFilters)}
           className="inline-flex items-center gap-1.5 text-[13px] font-medium text-primary hover:text-[var(--accent-dark)] transition-colors px-2 py-1.5 rounded-md"
         >
           <X className="h-3.5 w-3.5" />
