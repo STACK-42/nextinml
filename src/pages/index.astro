@@ -4,7 +4,7 @@ import Mark from "@/components/Mark.astro";
 import Pattern from "@/components/Pattern.astro";
 import { ProgramCard } from "@/components/ProgramCard";
 import { getPrograms } from "@/lib/content";
-import { isPast } from "@/lib/programs";
+import { inSection, isPast, type SectionId } from "@/lib/programs";
 
 const programs = await getPrograms();
 const open = programs.filter((p) => p.deadline !== null && !isPast(p.deadline));
@@ -14,29 +14,31 @@ const regionCount = new Set(programs.map((p) => p.region)).size;
 const stats = [
   `${programs.length} program${programs.length === 1 ? "" : "s"}`,
   `${regionCount} region${regionCount === 1 ? "" : "s"}`,
-  "Free to use",
 ];
 
-const categories = [
-  {
+const blurbs: Record<SectionId, { label: string; title: string; desc: string }> = {
+  schools: {
     label: "Summer & Winter",
     title: "Summer & Winter Schools",
     desc: "Immersive, time-boxed programs with hands-on practicals and lectures from leading researchers.",
-    count: programs.filter((p) => p.type === "Summer School" || p.type === "Winter School").length,
   },
-  {
+  fellowships: {
     label: "Fellowships",
     title: "Research Fellowships",
     desc: "Structured programs connecting students with real research problems and dedicated mentors.",
-    count: programs.filter((p) => p.type === "Fellowship").length,
   },
-  {
+  internships: {
     label: "Internships",
     title: "Internship Programs",
     desc: "Undergraduate-accessible roles at research institutes and industry labs around the world.",
-    count: programs.filter((p) => p.type === "Internship").length,
   },
-];
+};
+
+const categories = (Object.keys(blurbs) as SectionId[]).map((id) => ({
+  ...blurbs[id],
+  href: `/programs?type=${id}`,
+  count: programs.filter((p) => inSection(p, id)).length,
+}));
 ---
 
 <Base
@@ -44,10 +46,13 @@ const categories = [
   description="Discovery platform for ML summer schools, fellowships, and internships for early-stage students in MENA, Africa, and the Global South."
 >
   {/* Hero: the brand panel */}
-  <section class="relative overflow-hidden text-white" style="background: var(--panel)">
-    <Pattern />
+  <section
+    class="relative overflow-hidden text-white flex items-center"
+    style="background: var(--panel)"
+  >
     <div
-      class="relative max-w-6xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-[minmax(0,1fr)_auto] items-center gap-12"
+      data-tile-content
+      class="relative z-10 w-full max-w-6xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-[minmax(0,1fr)_auto] items-center gap-12"
     >
       <div>
         <p
@@ -90,6 +95,7 @@ const categories = [
         label="NextInML mark"
       />
     </div>
+    <Pattern />
   </section>
 
   {/* Opportunity types */}
@@ -97,7 +103,10 @@ const categories = [
     <div class="grid md:grid-cols-3 gap-5">
       {
         categories.map((c) => (
-          <div class="bg-surface border border-border p-7 flex flex-col hover:border-primary-text transition-colors">
+          <a
+            href={c.href}
+            class="group bg-surface border border-border p-7 flex flex-col hover:border-primary-text transition-colors"
+          >
             <p class="type-tag mb-5">{c.label}</p>
             <h3 class="text-xl font-bold mb-2">{c.title}</h3>
             <p class="text-sm text-subtle leading-relaxed mb-6">{c.desc}</p>
@@ -105,14 +114,11 @@ const categories = [
               <span class="text-sm text-muted-foreground">
                 {c.count} program{c.count === 1 ? "" : "s"}
               </span>
-              <a
-                href="/programs"
-                class="text-sm font-semibold text-primary-text hover:text-foreground"
-              >
+              <span class="text-sm font-semibold text-primary-text group-hover:text-foreground">
                 Explore →
-              </a>
+              </span>
             </div>
-          </div>
+          </a>
         ))
       }
     </div>
