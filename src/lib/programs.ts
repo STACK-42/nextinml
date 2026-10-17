@@ -29,6 +29,21 @@ export interface Program {
   topics: string[];
 }
 
+// The three opportunity types from the brief. Summer and winter schools are
+// one section; the directory's type filter and the home page use these ids.
+export const sections = [
+  { id: "schools", label: "Summer & Winter Schools", types: ["Summer School", "Winter School"] },
+  { id: "fellowships", label: "Fellowships", types: ["Fellowship"] },
+  { id: "internships", label: "Internships", types: ["Internship"] },
+] as const satisfies readonly { id: string; label: string; types: readonly ProgramType[] }[];
+
+export type SectionId = (typeof sections)[number]["id"];
+
+export function inSection(p: Pick<Program, "type">, id: string): boolean {
+  const section = sections.find((s) => s.id === id);
+  return section !== undefined && (section.types as readonly string[]).includes(p.type);
+}
+
 const DAY_MS = 1000 * 60 * 60 * 24;
 
 // After this many days a verified listing is shown as possibly out of date.

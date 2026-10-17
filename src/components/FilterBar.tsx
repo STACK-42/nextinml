@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { Program } from "@/lib/programs";
+import { inSection, sections, type Program } from "@/lib/programs";
 
 export interface FilterState {
   type: string;
@@ -47,7 +47,6 @@ function extractUnique(programs: Program[], key: keyof Program): string[] {
 }
 
 export function FilterBar({ programs, filters, onChange }: FilterBarProps) {
-  const types = extractUnique(programs, "type");
   const regions = extractUnique(programs, "region");
   const formats = extractUnique(programs, "format");
 
@@ -60,14 +59,14 @@ export function FilterBar({ programs, filters, onChange }: FilterBarProps) {
   return (
     <div className="flex flex-wrap items-center gap-3 mt-6">
       <Select value={filters.type || ALL} onValueChange={(v) => updateFilter("type", v)}>
-        <SelectTrigger className="w-[160px] bg-surface text-sm h-9 border-border focus:ring-primary-text">
+        <SelectTrigger className="w-[240px] bg-surface text-sm h-9 border-border focus:ring-primary-text">
           <SelectValue placeholder="Type" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value={ALL}>All types</SelectItem>
-          {types.map((t) => (
-            <SelectItem key={t} value={t}>
-              {t}
+          {sections.map((s) => (
+            <SelectItem key={s.id} value={s.id}>
+              {s.label}
             </SelectItem>
           ))}
         </SelectContent>
@@ -129,7 +128,7 @@ export function FilterBar({ programs, filters, onChange }: FilterBarProps) {
 
 export function filterPrograms(programs: Program[], filters: FilterState): Program[] {
   return programs.filter((p) => {
-    if (filters.type && p.type !== filters.type) return false;
+    if (filters.type && !inSection(p, filters.type)) return false;
     if (filters.region && p.region !== filters.region) return false;
     if (filters.format && p.format !== filters.format) return false;
 
