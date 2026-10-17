@@ -5,6 +5,7 @@ import Pattern from "@/components/Pattern.astro";
 import { ProgramCard } from "@/components/ProgramCard";
 import { getPrograms } from "@/lib/content";
 import { inSection, isPast, type SectionId } from "@/lib/programs";
+import { websiteLd } from "@/lib/seo";
 
 const programs = await getPrograms();
 const open = programs.filter((p) => p.deadline !== null && !isPast(p.deadline));
@@ -36,12 +37,13 @@ const blurbs: Record<SectionId, { label: string; title: string; desc: string }> 
 
 const categories = (Object.keys(blurbs) as SectionId[]).map((id) => ({
   ...blurbs[id],
-  href: `/programs?type=${id}`,
+  href: `/programs/?type=${id}`,
   count: programs.filter((p) => inSection(p, id)).length,
 }));
 ---
 
 <Base
+  jsonLd={websiteLd(Astro.site!)}
   title="NextInML · Your next step in ML, finally visible."
   description="Discovery platform for ML summer schools, fellowships, and internships for early-stage students in MENA, Africa, and the Global South."
 >
@@ -73,7 +75,7 @@ const categories = (Object.keys(blurbs) as SectionId[]).map((id) => ({
         </p>
         <div class="flex flex-wrap items-center gap-3 mb-10">
           <a
-            href="/programs"
+            href="/programs/"
             class="btn bg-white text-[#121212] hover:bg-[#F2542D] hover:text-white"
           >
             Browse opportunities <span aria-hidden="true">→</span>
@@ -132,7 +134,7 @@ const categories = (Object.keys(blurbs) as SectionId[]).map((id) => ({
         <h2 class="text-3xl font-bold">{open.length > 0 ? "Open right now" : "Programs"}</h2>
       </div>
       <a
-        href="/programs"
+        href="/programs/"
         class="text-sm font-semibold text-primary-text hover:text-foreground hidden sm:inline"
       >
         See all →
@@ -156,7 +158,7 @@ const categories = (Object.keys(blurbs) as SectionId[]).map((id) => ({
         </p>
       </div>
       <a
-        href="/share"
+        href="/share/"
         class="btn bg-white text-[#121212] hover:bg-[#F2542D] hover:text-white shrink-0"
       >
         Share your experience <span aria-hidden="true">→</span>

@@ -2,7 +2,7 @@ import type { Program } from "@/lib/programs";
 import { deadlineCta, deadlineState, isStale, verifiedLabel } from "@/lib/programs";
 
 export function ProgramCard({ program }: { program: Program }) {
-  const href = `/programs/${program.id}`;
+  const href = `/programs/${program.id}/`;
   const open = deadlineState(program) === "open";
   const stale = isStale(program.lastVerified);
 

@@ -2,17 +2,25 @@
 import "@/styles.css";
 import Nav from "@/components/Nav.astro";
 import Mark from "@/components/Mark.astro";
+import { serializeLd } from "@/lib/seo";
 
 interface Props {
   title?: string;
   description?: string;
   // For pages search engines shouldn't index, like the 404 page.
   noindex?: boolean;
+  // schema.org structured data from src/lib/seo.ts.
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const defaultDescription =
   "Summer schools, fellowships, and internships for early-stage ML students.";
-const { title = "NextInML", description = defaultDescription, noindex = false } = Astro.props;
+const {
+  title = "NextInML",
+  description = defaultDescription,
+  noindex = false,
+  jsonLd,
+} = Astro.props;
 
 // Absolute URLs for link previews, built from `site` in astro.config.mjs.
 // The canonical URL drops query strings, so filtered directory views share
@@ -56,6 +64,7 @@ const ogImageAlt = "NextInML: your next step in ML, finally visible.";
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={ogImageAlt} />
+    {jsonLd && <script type="application/ld+json" set:html={serializeLd(jsonLd)} />}
     <meta name="theme-color" content="#F7F7F5" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />

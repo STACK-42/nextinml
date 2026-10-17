@@ -43,6 +43,13 @@ The brand is "G · Tessellate": ultramarine `#2335C9`, vermilion `#F2542D`, ink 
 
 An inline script in `Base.astro` sets `data-theme` on `<html>` before first paint, from the saved choice or else the OS setting. `ThemeToggle` flips it and saves to `localStorage`. With JavaScript off, a `prefers-color-scheme` media query applies the dark values.
 
+## SEO
+
+- `src/pages/sitemap.xml.ts` builds `/sitemap.xml` from the published programs. A program's `lastmod` is its `lastVerified` date. `public/robots.txt` points crawlers to it.
+- `Base.astro` writes the canonical URL, Open Graph and X tags, and any JSON-LD a page passes in. `src/lib/seo.ts` builds the JSON-LD: `WebSite` on the home page, an `ItemList` on the directory, and `EducationalOccupationalProgram` plus `BreadcrumbList` on each program page.
+- `trailingSlash: "always"` matches how Cloudflare serves directory pages, so internal links and canonical URLs never point at a redirect. Write internal links as `/programs/`, not `/programs`.
+- The preview image is `public/og.png`, rendered from `scripts/og-image/og.html`.
+
 ## Hosting
 
 `wrangler.jsonc` deploys `dist/` to Cloudflare as a static-assets Worker with no script. Unknown paths serve `dist/404.html`.
