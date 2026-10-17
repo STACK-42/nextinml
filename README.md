@@ -7,8 +7,6 @@
 
 [![CI](https://img.shields.io/github/actions/workflow/status/STACK-42/nextinml/ci.yml?branch=main&label=CI)](https://github.com/STACK-42/nextinml/actions/workflows/ci.yml)
 
-**Live site:** [nextinml.stack42.tech](https://nextinml.stack42.tech)
-
 NextInML is a directory for early-stage machine learning students. It lists summer schools, fellowships, and internships, gives each one a detail page, and carries first-person writeups from people who attended.
 
 The site is static. All content lives in this repo as YAML and Markdown, and Astro builds it to plain HTML. There is no backend, database, or third-party data service.
