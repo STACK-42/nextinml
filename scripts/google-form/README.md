@@ -32,6 +32,17 @@ It only needs to run once. Running it again creates a second, separate form.
 > [!IMPORTANT]
 > If the form only accepts people in one organisation (common on Google Workspace accounts), students outside it can't respond. In the form, open **Settings → Responses** and turn off **Restrict to users in [your organisation]**.
 
+## Add the header image
+
+Apps Script can't set a form's theme, so this part is manual. [`header.png`](header.png) is a 1600×400 banner in the site's light brand.
+
+1. In the form editor, click the palette icon (**Customize theme**) at the top.
+2. Under **Header**, click **Choose image** → **Upload**, and pick `header.png`.
+3. Set the theme **Color** to `#2335C9` (ultramarine), so buttons and accents match the site.
+4. Set **Text → Header** to a font close to the site's, such as **Montserrat**. Google Forms doesn't offer Alexandria.
+
+To change the banner, edit [`header.html`](header.html) and run `scripts/google-form/render-header.sh`, which re-renders it with headless Chrome.
+
 ## Connect it to the site
 
 Set `shareFormUrl` in [`src/lib/site.ts`](../../src/lib/site.ts) to the public link and commit. The `/share` page then shows a "Write your experience" button in place of "Submissions open soon".

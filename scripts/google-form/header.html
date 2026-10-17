@@ -1,0 +1,109 @@
+<!doctype html>
+<!--
+  Source for header.png, the Google Form header image (1600x400).
+  Regenerate with scripts/google-form/render-header.sh.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;600;700&display=swap"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 1600px;
+        height: 400px;
+        overflow: hidden;
+      }
+      .panel {
+        position: relative;
+        width: 1600px;
+        height: 400px;
+        background: #2335c9;
+        color: #ffffff;
+        font-family: "Alexandria", system-ui, sans-serif;
+        overflow: hidden;
+      }
+      .tiles {
+        position: absolute;
+        inset: 0;
+      }
+      .content {
+        position: relative;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 0 120px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .eyebrow {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #dce0ff;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 14px;
+        height: 14px;
+        background: #f2542d;
+      }
+      h1 {
+        margin: 0 0 14px;
+        font-size: 84px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+      }
+      .sub {
+        font-size: 26px;
+        font-weight: 300;
+        color: #dce0ff;
+      }
+      .ar {
+        font-size: 30px;
+        font-weight: 600;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <svg class="tiles" width="1600" height="400" aria-hidden="true">
+        <defs>
+          <pattern id="t" width="80" height="80" patternUnits="userSpaceOnUse">
+            <path
+              transform="translate(8 8)"
+              d="M32 3.72L40.28 12H52V23.72L60.28 32L52 40.28V52H40.28L32 60.28L23.72 52H12V40.28L3.72 32L12 23.72V12H23.72Z"
+              fill="#2E42DA"
+            />
+          </pattern>
+        </defs>
+        <rect width="1600" height="400" fill="url(#t)" />
+      </svg>
+      <div class="content">
+        <div>
+          <div class="eyebrow">NextInML · Writeups</div>
+          <h1>Share your experience</h1>
+          <div class="sub">Help the next student decide whether to apply.</div>
+          <div class="ar" lang="ar" dir="rtl" style="text-align: left">شارك تجربتك</div>
+        </div>
+        <svg width="260" height="260" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <rect x="14" y="14" width="36" height="36" fill="#FFFFFF" />
+          <rect x="14" y="14" width="36" height="36" fill="#FFFFFF" transform="rotate(45 32 32)" />
+          <path d="M39.46 14H50V24.54Z" fill="#F2542D" />
+          <circle cx="32" cy="32" r="6" fill="#2335C9" />
+        </svg>
+      </div>
+    </div>
+  </body>
+</html>
