@@ -1,0 +1,117 @@
+<!doctype html>
+<!--
+  Source for the README banners (1280x320): banner-light.png and
+  banner-dark.png. Open with #dark for the black-mode version.
+  Regenerate with .github/assets/render-banner.sh.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;600;700&display=swap"
+    />
+    <style>
+      :root {
+        --panel: #2335c9;
+        --tile: #2e42da;
+        --muted: #dce0ff;
+        --accent: #ffffff;
+      }
+      :root.dark {
+        --panel: #0a0a0c;
+        --tile: #141a4a;
+        --muted: #c9c9cf;
+        --accent: #8a96ff;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1280px;
+        height: 320px;
+        overflow: hidden;
+      }
+      .panel {
+        position: relative;
+        width: 1280px;
+        height: 320px;
+        background: var(--panel);
+        color: #ffffff;
+        font-family: "Alexandria", system-ui, sans-serif;
+        overflow: hidden;
+      }
+      .tiles {
+        position: absolute;
+        inset: 0;
+      }
+      .content {
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 48px;
+      }
+      .wordmark {
+        font-size: 88px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+      .wordmark span {
+        color: var(--accent);
+      }
+      .dark .wordmark span {
+        color: var(--accent);
+      }
+      :root:not(.dark) .wordmark span {
+        color: #ffffff;
+        opacity: 0.75;
+      }
+      .tagline {
+        margin-top: 14px;
+        font-size: 26px;
+        font-weight: 300;
+        color: var(--muted);
+      }
+      .ar {
+        margin-top: 6px;
+        font-size: 26px;
+        font-weight: 600;
+        text-align: left;
+      }
+    </style>
+    <script>
+      if (location.hash === "#dark") document.documentElement.classList.add("dark");
+    </script>
+  </head>
+  <body>
+    <div class="panel">
+      <svg class="tiles" width="1280" height="320" aria-hidden="true">
+        <defs>
+          <pattern id="t" width="80" height="80" patternUnits="userSpaceOnUse">
+            <path
+              transform="translate(8 8)"
+              d="M32 3.72L40.28 12H52V23.72L60.28 32L52 40.28V52H40.28L32 60.28L23.72 52H12V40.28L3.72 32L12 23.72V12H23.72Z"
+              style="fill: var(--tile)"
+            />
+          </pattern>
+        </defs>
+        <rect width="1280" height="320" fill="url(#t)" />
+      </svg>
+      <div class="content">
+        <svg width="200" height="200" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <rect x="14" y="14" width="36" height="36" fill="#FFFFFF" />
+          <rect x="14" y="14" width="36" height="36" fill="#FFFFFF" transform="rotate(45 32 32)" />
+          <path d="M39.46 14H50V24.54Z" fill="#F2542D" />
+          <circle cx="32" cy="32" r="6" style="fill: var(--panel)" />
+        </svg>
+        <div>
+          <div class="wordmark">NextIn<span>ML</span></div>
+          <div class="tagline">Your next step in ML, finally visible.</div>
+          <div class="ar" lang="ar" dir="rtl">خطوتك التالية في تعلّم الآلة</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
