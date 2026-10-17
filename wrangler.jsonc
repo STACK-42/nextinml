@@ -1,0 +1,10 @@
+// Cloudflare Workers static-assets deploy. There is no Worker script: the
+// built site in dist/ is served as-is, with dist/404.html for unknown paths.
+{
+  "name": "nextinml",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+  },
+}
