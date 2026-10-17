@@ -7,7 +7,7 @@ import tseslint from "typescript-eslint";
 // Lints TypeScript and React files. `npm run check` (astro check) covers
 // type errors in .astro files.
 export default tseslint.config(
-  { ignores: ["dist", ".astro", ".output", ".wrangler"] },
+  { ignores: ["dist", ".astro", ".output", ".wrangler", "G · */**"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],

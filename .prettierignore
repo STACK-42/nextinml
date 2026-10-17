@@ -3,3 +3,5 @@ dist
 .astro
 package-lock.json
 bun.lock
+# Design reference exports, kept out of the repo
+G · */
