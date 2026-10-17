@@ -1,93 +1,75 @@
 # NextInML
 
-NextInML is a directory for early-stage machine learning students. It lists summer schools, fellowships, and internships, and gives each one a detail page. Program data comes from Airtable when that is configured, and from a built-in sample set otherwise.
+NextInML is a directory for early-stage machine learning students. It lists summer schools, fellowships, and internships, gives each one a detail page, and carries first-person writeups from people who attended.
 
-This file covers local development and deployment. For how the parts fit together, read [`docs/architecture.md`](docs/architecture.md).
+The site is static. All content lives in this repo as YAML and Markdown, and Astro builds it to plain HTML. There is no backend, database, or third-party data service.
 
-## What it lists
-
-The directory is aimed at students who have finished a first ML course and want a concrete next step. Its main audience is in MENA and Africa, though listings are not limited to those regions. It covers three kinds of opportunity:
-
-- ML summer and winter schools, such as M2L, MENA.ML, Data Science Africa, and AMMI.
-- Research fellowships and mentorship programs, such as MATS, SPAR, Pivotal, MARS, and CBAI.
-- Internships at research institutes and labs that undergraduates can apply to.
-
-General ML conferences, paid courses, senior job listings, and paper aggregation are out of scope.
-
-Each listing shows when it was last verified, so entries that have gone stale are visible instead of hidden.
+For how the parts fit together, read [`docs/architecture.md`](docs/architecture.md).
 
 ## Stack
 
-- TanStack Start (React 19), server-rendered through Nitro.
-- Vite 7 for the dev server and the build.
-- Tailwind CSS v4 for styling.
-- TanStack Router for file-based routes, TanStack Query for client-side data fetching.
-- The production build targets Cloudflare Workers.
+- [Astro](https://astro.build) 7, static output, with content collections for the data.
+- React for the one interactive part, the filter bar on `/programs`.
+- Tailwind CSS v4.
+- Cloudflare (static assets on Workers) for hosting.
 
-## Prerequisites
+## Develop
 
-Node 22 (the version CI uses) or Bun. CI installs with npm from `package-lock.json`. A `bun.lock` is also checked in, so Bun works too. Pick one and stay with it, and if you add or change a dependency, update both lockfiles.
-
-## Install
+Node 22.22 or newer. npm is what CI uses; a `bun.lock` is kept in sync too.
 
 ```bash
-npm install   # or: bun install
+npm install
+npm run dev       # http://localhost:4321
 ```
 
-## Run the dev server
+Other scripts:
 
 ```bash
-npm run dev
+npm run build     # static site into dist/
+npm run preview   # serve dist/ locally
+npm run check     # typecheck, including .astro files
+npm run lint
+npm run format
 ```
 
-> [!NOTE]
-> The server starts on port 8080. If that port is busy it takes the next free one, so check the startup log for the real URL.
+## Adding or updating a program
 
-## Scripts
+Each program is one file in `content/programs/`. The file name is the program's id and its URL, so `content/programs/m2l.yaml` becomes `/programs/m2l`.
 
-| Command             | What it does                                          |
-| ------------------- | ----------------------------------------------------- |
-| `npm run dev`       | Starts the Vite dev server.                           |
-| `npm run build`     | Builds the app for Cloudflare Workers into `.output`. |
-| `npm run preview`   | Serves the production build locally.                  |
-| `npm run lint`      | Runs ESLint, including the Prettier check.            |
-| `npm run typecheck` | Runs the TypeScript compiler without emitting files.  |
-| `npm run format`    | Rewrites files with Prettier.                         |
+```yaml
+name: Mediterranean Machine Learning Summer School
+type: Summer School # Summer School | Winter School | Fellowship | Internship
+organizer: Google DeepMind scientists & University of Split (FESB)
+description: One or two sentences for the card.
+region: Mediterranean # Global | Africa | MENA | Mediterranean | Europe | Asia | Americas
+format: In-person # In-person | Remote | Hybrid
+deadline: 2027-03-01 # or null for rolling / not announced
+deadlineNote: 2027 call to be announced # optional, explains a null or unusual deadline
+applicationUrl: https://www.m2lschool.org/
+lastVerified: 2026-10-17 # the day you checked it against the program's page
+```
 
-## Environment variables
-
-Program data loads from Airtable when these are set:
-
-- `AIRTABLE_TOKEN`: a read-only Airtable personal access token.
-- `AIRTABLE_BASE_ID`: the base that holds the Programs table.
-- `AIRTABLE_TABLE_NAME`: optional, defaults to `Programs`.
-
-Set them in your shell before starting the dev server, or in a gitignored env file your tooling loads (`.dev.vars` and `*.local` are already ignored). Without them, the app falls back to the sample programs in `src/lib/programs.ts`, and the directory shows a note that it is running on sample data. The token is read inside a server function, so it never reaches the browser.
-
-## CI and deployment
-
-The workflow in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs lint, typecheck, and build on every push and pull request. Run the same three commands locally before pushing to catch failures early.
-
-Pushes to `main` also deploy the build to Cloudflare Workers with Wrangler. The deploy job needs two repository secrets:
-
-- `CLOUDFLARE_API_TOKEN`: an API token with permission to edit Workers.
-- `CLOUDFLARE_ACCOUNT_ID`: the Cloudflare account that owns the Worker.
+Optional fields for the detail page: `longDescription`, `location`, `dates`, `duration`, `eligibility`, `cost`, `topics` (a list), and `draft: true` to keep a listing off the site while you work on it. The full schema is in [`src/content.config.ts`](src/content.config.ts).
 
 > [!IMPORTANT]
-> Until both secrets are set, the deploy job skips with a notice and the site is not published.
+> Only set `lastVerified` after checking the listing against the program's own page. The site shows "Verified Xd ago" on every card, and that label is only useful if it is true.
 
-The Airtable variables are read at runtime, so they belong on the Worker rather than in GitHub. After the first deploy, set them once with Wrangler:
+A file that breaks the schema (an unknown `type`, a malformed date, a missing field) fails the build with an error naming the file.
+
+## Adding a writeup
+
+Copy [`content/writeups/_template.md`](content/writeups/_template.md) to `content/writeups/<program>-<cohort>-<author>.md`, fill in the frontmatter, and write the body in Markdown. The `program` field must match a program's file name. The writeup then appears on that program's page. A writeup pointing at a program that doesn't exist fails the build.
+
+## Keeping listings fresh
+
+A weekly workflow ([`.github/workflows/stale-check.yml`](.github/workflows/stale-check.yml)) flags listings that were never verified, were verified more than 90 days ago, have a passed deadline, have an unreachable page, or whose page text changed since the last run. It keeps one open issue labeled `stale-check` up to date. Run it locally with:
 
 ```bash
-npx wrangler secret put AIRTABLE_TOKEN --name stack-42-nextinml
-npx wrangler secret put AIRTABLE_BASE_ID --name stack-42-nextinml
+node scripts/check-stale.mjs
 ```
 
-## Where things live
+## Deploy
 
-- `src/routes`: pages and the root shell.
-- `src/components`: shared components, with UI primitives under `src/components/ui`.
-- `src/lib`: the `Program` type, the Airtable server function, and small date helpers.
-- `docs`: architecture notes and the writing guide for project copy.
+CI ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) lints, typechecks, and builds on every push and pull request, then deploys `dist/` to Cloudflare from `main`. It also rebuilds daily, because deadline and "verified" labels are computed at build time.
 
-The full map is in [`docs/architecture.md`](docs/architecture.md).
+Deploys need two repository secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Without them the deploy step is skipped and the rest of CI still runs.
