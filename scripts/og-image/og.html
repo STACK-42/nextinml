@@ -1,0 +1,115 @@
+<!doctype html>
+<!--
+  Source for public/og.png (1200x630), the link preview image used by
+  WhatsApp, LinkedIn, X, Slack and others. Regenerate with
+  scripts/og-image/render.sh.
+
+  630 isn't a multiple of the 80px tile, so the pattern starts 5px above
+  the top. Each star has 8px of margin in its tile, so all eight rows stay
+  whole. Key content sits in the centre in case an app crops to a square.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;600;700&display=swap"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+      .panel {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        background: #2335c9;
+        color: #ffffff;
+        font-family: "Alexandria", system-ui, sans-serif;
+        overflow: hidden;
+      }
+      .tiles {
+        position: absolute;
+        inset: 0;
+      }
+      .content {
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .wordmark {
+        margin-top: 28px;
+        font-size: 92px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+      .wordmark span {
+        opacity: 0.75;
+      }
+      .tagline {
+        margin-top: 18px;
+        font-size: 32px;
+        font-weight: 300;
+        color: #dce0ff;
+      }
+      .ar {
+        margin-top: 8px;
+        font-size: 32px;
+        font-weight: 600;
+      }
+      .url {
+        margin-top: 26px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: #dce0ff;
+      }
+      .url::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        background: #f2542d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <svg class="tiles" width="1200" height="630" aria-hidden="true">
+        <defs>
+          <pattern id="t" y="-5" width="80" height="80" patternUnits="userSpaceOnUse">
+            <path
+              transform="translate(8 8)"
+              d="M32 3.72L40.28 12H52V23.72L60.28 32L52 40.28V52H40.28L32 60.28L23.72 52H12V40.28L3.72 32L12 23.72V12H23.72Z"
+              fill="#2E42DA"
+            />
+          </pattern>
+        </defs>
+        <rect width="1200" height="630" fill="url(#t)" />
+      </svg>
+      <div class="content">
+        <svg width="150" height="150" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <rect x="14" y="14" width="36" height="36" fill="#FFFFFF" />
+          <rect x="14" y="14" width="36" height="36" fill="#FFFFFF" transform="rotate(45 32 32)" />
+          <path d="M39.46 14H50V24.54Z" fill="#F2542D" />
+          <circle cx="32" cy="32" r="6" fill="#2335C9" />
+        </svg>
+        <div class="wordmark">NextIn<span>ML</span></div>
+        <div class="tagline">Your next step in ML, finally visible.</div>
+        <div class="ar" lang="ar" dir="rtl">خطوتك التالية في تعلّم الآلة</div>
+        <div class="url">NEXTINML.STACK42.TECH</div>
+      </div>
+    </div>
+  </body>
+</html>
