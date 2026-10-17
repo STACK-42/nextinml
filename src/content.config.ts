@@ -1,4 +1,4 @@
-import { defineCollection } from "astro:content";
+import { defineCollection, reference } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
@@ -47,4 +47,22 @@ const programs = defineCollection({
   }),
 });
 
-export const collections = { programs };
+// First-person writeups from people who attended a program, in
+// content/writeups/<program>-<cohort>-<author>.md. Files starting with "_"
+// are ignored, which keeps _template.md out of the site.
+const writeups = defineCollection({
+  loader: glob({ pattern: "**/[!_]*.md", base: "./content/writeups" }),
+  schema: z.object({
+    program: reference("programs"),
+    title: z.string(),
+    author: z.string(),
+    // What the author was at the time, e.g. "3rd-year CS undergrad, Khartoum".
+    authorContext: z.string().optional(),
+    // The edition attended, e.g. "2025".
+    cohort: z.string(),
+    published: z.coerce.date(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { programs, writeups };

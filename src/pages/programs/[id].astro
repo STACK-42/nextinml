@@ -3,11 +3,13 @@ import type { GetStaticPaths } from "astro";
 import { ArrowLeft, CalendarDays, Clock, Globe, MapPin, ShieldCheck } from "lucide-react";
 
 import Base from "@/layouts/Base.astro";
-import { getPrograms } from "@/lib/content";
+import Writeups from "@/components/Writeups.astro";
+import { assertWriteupsHavePrograms, getPrograms } from "@/lib/content";
 import { deadlineLabel, verifiedAgo, type Program } from "@/lib/programs";
 
 export const getStaticPaths = (async () => {
   const programs = await getPrograms();
+  await assertWriteupsHavePrograms(programs);
   return programs.map((program) => ({ params: { id: program.id }, props: { program } }));
 }) satisfies GetStaticPaths;
 
@@ -105,5 +107,7 @@ const sections = [
         </a>
       </div>
     </article>
+
+    <Writeups programId={program.id} />
   </section>
 </Base>
