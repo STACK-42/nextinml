@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-  # Rebuild daily so "Verified Xd ago" and "Closed" badges, which are computed
+  # Rebuild daily so the "Closed" and out-of-date markers, which are computed
   # at build time, stay current even when no content changes.
   schedule:
     - cron: "0 4 * * *"

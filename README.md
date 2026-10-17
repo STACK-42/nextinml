@@ -52,7 +52,7 @@ lastVerified: 2026-10-17 # the day you checked it against the program's page
 Optional fields for the detail page: `longDescription`, `location`, `dates`, `duration`, `eligibility`, `cost`, `topics` (a list), and `draft: true` to keep a listing off the site while you work on it. The full schema is in [`src/content.config.ts`](src/content.config.ts).
 
 > [!IMPORTANT]
-> Only set `lastVerified` after checking the listing against the program's own page. The site shows "Verified Xd ago" on every card, and that label is only useful if it is true.
+> Only set `lastVerified` after checking the listing against the program's own page. Every card shows "Verified <date>", and that label is only useful if it is true. Listings unverified or verified more than 90 days ago are marked in vermilion.
 
 A file that breaks the schema (an unknown `type`, a malformed date, a missing field) fails the build with an error naming the file.
 
