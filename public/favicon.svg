@@ -1,1 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none"><rect width="64" height="64" fill="#2335C9"/><rect x="10" y="10" width="44" height="44" fill="#FFFFFF"/><rect x="10" y="10" width="44" height="44" fill="#FFFFFF" transform="rotate(45 32 32)"/><path d="M37.8 10H54V26.2Z" fill="#F2542D"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Small-size Tessellate mark from the brand board. The tile follows the
+       browser's colour scheme: ultramarine in light, near-black in dark. -->
+  <style>
+    .tile { fill: #2335C9; }
+    .edge { stroke: none; }
+    @media (prefers-color-scheme: dark) {
+      .tile { fill: #0A0A0C; }
+      .edge { stroke: #2C2C31; stroke-width: 2; }
+    }
+  </style>
+  <rect class="tile" width="64" height="64"/>
+  <rect class="edge" x="1" y="1" width="62" height="62"/>
+  <rect x="10" y="10" width="44" height="44" fill="#FFFFFF"/>
+  <rect x="10" y="10" width="44" height="44" fill="#FFFFFF" transform="rotate(45 32 32)"/>
+  <path d="M37.8 10H54V26.2Z" fill="#F2542D"/>
+</svg>
