@@ -1,0 +1,17 @@
+---
+// Tessellate tile repeated over the brand panel. Place inside a
+// `relative overflow-hidden` element; it fills it and sits behind the content.
+const id = `tile-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<svg class="absolute inset-0 h-full w-full pointer-events-none" aria-hidden="true">
+  <defs>
+    <pattern id={id} width="80" height="80" patternUnits="userSpaceOnUse">
+      <path
+        transform="translate(8 8)"
+        d="M32 3.72L40.28 12H52V23.72L60.28 32L52 40.28V52H40.28L32 60.28L23.72 52H12V40.28L3.72 32L12 23.72V12H23.72Z"
+        style="fill: var(--panel-tile)"></path>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill={`url(#${id})`}></rect>
+</svg>

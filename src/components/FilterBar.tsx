@@ -60,7 +60,7 @@ export function FilterBar({ programs, filters, onChange }: FilterBarProps) {
   return (
     <div className="flex flex-wrap items-center gap-3 mt-6">
       <Select value={filters.type || ALL} onValueChange={(v) => updateFilter("type", v)}>
-        <SelectTrigger className="w-[160px] bg-surface text-sm h-9 border-border focus:ring-primary">
+        <SelectTrigger className="w-[160px] bg-surface text-sm h-9 border-border focus:ring-primary-text">
           <SelectValue placeholder="Type" />
         </SelectTrigger>
         <SelectContent>
@@ -74,7 +74,7 @@ export function FilterBar({ programs, filters, onChange }: FilterBarProps) {
       </Select>
 
       <Select value={filters.region || ALL} onValueChange={(v) => updateFilter("region", v)}>
-        <SelectTrigger className="w-[160px] bg-surface text-sm h-9 border-border focus:ring-primary">
+        <SelectTrigger className="w-[160px] bg-surface text-sm h-9 border-border focus:ring-primary-text">
           <SelectValue placeholder="Region" />
         </SelectTrigger>
         <SelectContent>
@@ -88,7 +88,7 @@ export function FilterBar({ programs, filters, onChange }: FilterBarProps) {
       </Select>
 
       <Select value={filters.format || ALL} onValueChange={(v) => updateFilter("format", v)}>
-        <SelectTrigger className="w-[160px] bg-surface text-sm h-9 border-border focus:ring-primary">
+        <SelectTrigger className="w-[160px] bg-surface text-sm h-9 border-border focus:ring-primary-text">
           <SelectValue placeholder="Format" />
         </SelectTrigger>
         <SelectContent>
@@ -102,7 +102,7 @@ export function FilterBar({ programs, filters, onChange }: FilterBarProps) {
       </Select>
 
       <Select value={filters.deadline || ALL} onValueChange={(v) => updateFilter("deadline", v)}>
-        <SelectTrigger className="w-[180px] bg-surface text-sm h-9 border-border focus:ring-primary">
+        <SelectTrigger className="w-[180px] bg-surface text-sm h-9 border-border focus:ring-primary-text">
           <SelectValue placeholder="Deadline" />
         </SelectTrigger>
         <SelectContent>
@@ -117,7 +117,7 @@ export function FilterBar({ programs, filters, onChange }: FilterBarProps) {
       {activeCount > 0 && (
         <button
           onClick={() => onChange(emptyFilters)}
-          className="inline-flex items-center gap-1.5 text-[13px] font-medium text-primary hover:text-[var(--accent-dark)] transition-colors px-2 py-1.5 rounded-md"
+          className="inline-flex items-center gap-1.5 text-[13px] font-medium text-primary-text hover:text-foreground transition-colors px-2 py-1.5 cursor-pointer"
         >
           <X className="h-3.5 w-3.5" />
           Clear ({activeCount})

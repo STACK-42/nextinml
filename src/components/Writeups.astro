@@ -13,12 +13,12 @@ const rendered = await Promise.all(
 );
 ---
 
-<section id="experiences" class="mt-14 pt-10 border-t border-border">
-  <h2 class="text-sm font-bold uppercase tracking-wider text-primary mb-6">From people who went</h2>
+<section id="experiences" class="mt-14 pt-8 border-t-2 border-foreground">
+  <h2 class="eyebrow text-primary-text! mb-6">From people who went</h2>
 
   {
     rendered.length === 0 ? (
-      <div class="bg-surface border border-dashed border-border rounded-lg p-6">
+      <div class="bg-surface border border-dashed border-border p-6">
         <p class="font-semibold mb-1">No writeups yet</p>
         <p class="text-sm text-muted-foreground">
           If you attended this program, an honest account of what it was like would help the next
@@ -28,14 +28,14 @@ const rendered = await Promise.all(
     ) : (
       <div class="space-y-6">
         {rendered.map(({ data, Content }) => (
-          <article class="bg-surface border border-border rounded-lg p-6 md:p-8">
+          <article class="bg-surface border border-border p-6 md:p-8">
             <h3 class="text-xl font-bold mb-1">{data.title}</h3>
             <p class="text-[13px] text-muted-foreground mb-5">
               {data.author}
               {data.authorContext && <span> · {data.authorContext}</span>}
               <span> · {data.cohort} cohort</span>
             </p>
-            <div class="writeup text-foreground/80 leading-relaxed">
+            <div class="writeup text-subtle leading-relaxed">
               <Content />
             </div>
           </article>

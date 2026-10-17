@@ -2,62 +2,104 @@
 @source "../src";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Brand "G · Tessellate". Colours come from the two design boards: light
+   ("06 mark and colours") and black mode. The theme is set on <html> as
+   data-theme by an inline script in Base.astro; the media query below is the
+   fallback when JavaScript is off. Corners are square throughout. */
 
 @theme inline {
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-pill: 999px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Alexandria", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
   --color-surface: var(--surface);
-  --color-card: var(--surface);
-  --color-card-foreground: var(--foreground);
   --color-popover: var(--surface);
-  --color-popover-foreground: var(--foreground);
-
-  --color-primary: var(--primary);
-  --color-primary-foreground: #ffffff;
-  --color-accent: var(--accent);
-  --color-accent-foreground: #ffffff;
-  --color-accent-light: var(--accent-light);
-
-  --color-secondary: var(--purple-50);
-  --color-secondary-foreground: var(--primary);
-
-  --color-muted: var(--gray-50);
+  --color-popover-foreground: var(--ink);
+  --color-border: var(--line);
+  --color-input: var(--line);
+  --color-ring: var(--primary-text);
+  --color-muted: var(--line);
   --color-muted-foreground: var(--muted-fg);
+  --color-subtle: var(--subtle-fg);
 
-  --color-purple-50: var(--purple-50);
-  --color-teal-50: var(--teal-50);
-  --color-gray-50: var(--gray-50);
+  /* Ultramarine as a fill (buttons, panels) and as text (links, accents). */
+  --color-primary: var(--primary);
+  --color-primary-text: var(--primary-text);
+  --color-vermilion: var(--vermilion);
 
-  --color-destructive: oklch(0.577 0.245 27.325);
-  --color-destructive-foreground: #ffffff;
-
-  --color-border: var(--border-color);
-  --color-input: var(--border-color);
-  --color-ring: var(--primary);
+  /* shadcn's Select highlights the focused item with bg-accent. */
+  --color-accent: var(--primary);
+  --color-accent-foreground: #ffffff;
 }
 
 :root {
-  --primary: #534ab7;
-  --accent: #1d9e75;
-  --accent-light: #5dcaa5;
-  --accent-dark: #0f6e56;
-  --foreground: #1a1a1a;
-  --background: #f8f7ff;
+  --paper: #f7f7f5;
+  --ink: #121212;
   --surface: #ffffff;
-  --purple-50: #eeedfe;
-  --teal-50: #e1f5ee;
-  --gray-50: #f1efe8;
-  --border-color: #e8e7f5;
-  --muted-fg: #6b6880;
+  --line: #d6d6d2;
+  --muted-fg: #55565c;
+  --subtle-fg: #55565c;
+  --primary: #2335c9;
+  --primary-text: #2335c9;
+  --vermilion: #f2542d;
+
+  /* The patterned brand panel (hero) and the deep card used for contrast. */
+  --panel: #2335c9;
+  --panel-tile: #2e42da;
+  --panel-muted: #dce0ff;
+  --deep: #0e1033;
+  --deep-muted: #a8add9;
+
+  /* Tessellate mark on ordinary surfaces. */
+  --mark: #2335c9;
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #121212;
+  --ink: #f7f7f5;
+  --surface: #1c1c1f;
+  --line: #2c2c31;
+  --muted-fg: #a3a3aa;
+  --subtle-fg: #c9c9cf;
+  --primary-text: #8a96ff;
+
+  --panel: #0a0a0c;
+  --panel-tile: #141a4a;
+  --panel-muted: #c9c9cf;
+  --deep: #1c1c1f;
+  --deep-muted: #a3a3aa;
+
+  --mark: #ffffff;
+
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --paper: #121212;
+    --ink: #f7f7f5;
+    --surface: #1c1c1f;
+    --line: #2c2c31;
+    --muted-fg: #a3a3aa;
+    --subtle-fg: #c9c9cf;
+    --primary-text: #8a96ff;
+    --panel: #0a0a0c;
+    --panel-tile: #141a4a;
+    --panel-muted: #c9c9cf;
+    --deep: #1c1c1f;
+    --deep-muted: #a3a3aa;
+    --mark: #ffffff;
+    color-scheme: dark;
+  }
 }
 
 @layer base {
@@ -71,49 +113,64 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    line-height: 1.7;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
   h1,
   h2,
   h3 {
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.15;
   }
+  [lang="ar"] {
+    letter-spacing: 0;
+    line-height: 1.55;
+  }
 }
 
+/* Small uppercase label above headings and on cards. */
 @utility eyebrow {
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: var(--muted-fg);
 }
 
-@utility pill {
+/* Program type: a vermilion square and an uppercase label. */
+@utility type-tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  border-radius: 999px;
-  padding: 6px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1;
-}
-
-@keyframes signal-pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.65;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  &::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    flex: none;
+    background: var(--vermilion);
   }
 }
 
-@utility signal-pulse {
-  animation: signal-pulse 3s ease-in-out infinite;
+/* Square button. Colours are set where it is used. */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  transition:
+    background-color 150ms,
+    color 150ms,
+    border-color 150ms;
 }
 
 /* Markdown body of a writeup. */
@@ -135,14 +192,13 @@
 .writeup h3 {
   margin: 1.5em 0 0.5em;
   font-size: 1.05rem;
-  color: var(--foreground);
+  color: var(--ink);
 }
 .writeup blockquote {
-  border-left: 3px solid var(--border-color);
+  border-left: 3px solid var(--vermilion);
   padding-left: 1em;
-  font-style: italic;
 }
 .writeup a {
-  color: var(--accent);
+  color: var(--primary-text);
   text-decoration: underline;
 }

@@ -1,22 +1,26 @@
 ---
-import { Logo } from "./Logo";
+import Mark from "./Mark.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 ---
 
-<header class="sticky top-0 z-40 bg-surface/90 backdrop-blur border-b border-border">
-  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="/" class="flex items-center">
-      <Logo />
+<header class="sticky top-0 z-40 bg-background/90 backdrop-blur border-b border-border">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-2.5 text-foreground" aria-label="NextInML home">
+      <Mark size={34} hole="var(--paper)" />
+      <span class="text-[22px] font-bold tracking-[-0.03em] leading-none">
+        NextIn<span class="text-primary-text">ML</span>
+      </span>
     </a>
-    <div class="hidden md:flex items-center gap-8 text-sm text-foreground/80">
-      <a href="/programs" class="hover:text-primary transition-colors">Browse</a>
-      <a href="#experiences" class="hover:text-primary transition-colors">Experiences</a>
-      <a href="#about" class="hover:text-primary transition-colors">About</a>
+    <div class="hidden md:flex items-center gap-8 text-sm text-subtle">
+      <a href="/programs" class="hover:text-primary-text transition-colors">Browse</a>
+      <a href="#experiences" class="hover:text-primary-text transition-colors">Experiences</a>
+      <a href="#about" class="hover:text-primary-text transition-colors">About</a>
     </div>
-    <a
-      href="#submit"
-      class="pill bg-accent text-white hover:bg-[var(--accent-dark)] transition-colors"
-    >
-      Submit experience
-    </a>
+    <div class="flex items-center gap-3">
+      <ThemeToggle />
+      <a href="#submit" class="btn bg-primary text-white hover:bg-foreground hover:text-background">
+        Submit experience
+      </a>
+    </div>
   </nav>
 </header>

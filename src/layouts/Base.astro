@@ -1,6 +1,7 @@
 ---
 import "@/styles.css";
 import Nav from "@/components/Nav.astro";
+import Mark from "@/components/Mark.astro";
 
 interface Props {
   title?: string;
@@ -17,25 +18,51 @@ const { title = "NextInML", description = defaultDescription } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Set the theme before first paint: a saved choice wins, otherwise follow the OS.
+      (function () {
+        var theme = null;
+        try {
+          theme = localStorage.getItem("theme");
+        } catch (e) {}
+        if (theme !== "light" && theme !== "dark") {
+          theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#2335C9" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&display=swap"
     />
   </head>
   <body>
-    <div class="min-h-screen">
+    <div class="min-h-screen flex flex-col">
       <Nav />
-      <slot />
-      <footer class="border-t border-border py-10 text-center text-sm text-muted-foreground">
-        Built from inside the gap it closes.
+      <main class="flex-1">
+        <slot />
+      </main>
+      <footer class="border-t-2 border-foreground">
+        <div
+          class="max-w-6xl mx-auto px-6 py-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-sm text-muted-foreground"
+        >
+          <div class="flex items-center gap-3">
+            <Mark size={28} hole="var(--paper)" />
+            <span>Built from inside the gap it closes.</span>
+          </div>
+          <span lang="ar" dir="rtl">خطوتك التالية في تعلّم الآلة</span>
+        </div>
       </footer>
     </div>
   </body>

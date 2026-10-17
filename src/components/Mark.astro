@@ -1,0 +1,37 @@
+---
+// The Tessellate mark: two overlapping squares make an eight-point star, the
+// vermilion corner is "your" direction, and the centre hole shows whatever
+// the mark sits on, so `hole` should match the background behind it.
+interface Props {
+  size?: number;
+  fill?: string;
+  hole?: string;
+  class?: string;
+  label?: string;
+}
+
+const {
+  size = 40,
+  fill = "var(--mark)",
+  hole = "var(--paper)",
+  class: className,
+  label,
+} = Astro.props;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 64 64"
+  fill="none"
+  class={className}
+  role={label ? "img" : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : "true"}
+>
+  <rect x="14" y="14" width="36" height="36" style={`fill: ${fill}`}></rect>
+  <rect x="14" y="14" width="36" height="36" style={`fill: ${fill}`} transform="rotate(45 32 32)"
+  ></rect>
+  <path d="M39.46 14H50V24.54Z" fill="#F2542D"></path>
+  <circle cx="32" cy="32" r="6" style={`fill: ${hole}`}></circle>
+</svg>

@@ -5,7 +5,7 @@ import { ArrowLeft, CalendarDays, Clock, Globe, MapPin, ShieldCheck } from "luci
 import Base from "@/layouts/Base.astro";
 import Writeups from "@/components/Writeups.astro";
 import { assertWriteupsHavePrograms, getPrograms } from "@/lib/content";
-import { deadlineLabel, verifiedAgo, type Program } from "@/lib/programs";
+import { deadlineLabel, isStale, verifiedLabel, type Program } from "@/lib/programs";
 
 export const getStaticPaths = (async () => {
   const programs = await getPrograms();
@@ -24,6 +24,8 @@ const stats = [
   { icon: Clock, label: "Duration", value: program.duration },
 ].filter((s) => s.value);
 
+const stale = isStale(program.lastVerified);
+
 const sections = [
   { title: "Who can apply", body: program.eligibility },
   { title: "Cost & funding", body: program.cost },
@@ -34,30 +36,34 @@ const sections = [
   <section class="max-w-3xl mx-auto px-6 py-12 md:py-16">
     <a
       href="/programs"
-      class="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8"
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary-text transition-colors mb-8"
     >
       <ArrowLeft className="h-4 w-4" />
       All programs
     </a>
 
     <article>
-      <div class="flex items-center gap-3 mb-4">
-        <span class="pill bg-purple-50 text-primary text-[11px] uppercase tracking-wide">
-          {program.type}
-        </span>
-        <span class="flex items-center gap-1.5 text-[12px] text-muted-foreground">
-          <ShieldCheck className="h-3.5 w-3.5 text-accent" />
-          {verifiedAgo(program.lastVerified)}
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <span class="type-tag">{program.type}</span>
+        <span
+          class:list={[
+            "flex items-center gap-1.5 text-[12px]",
+            stale ? "text-vermilion" : "text-muted-foreground",
+          ]}
+        >
+          <ShieldCheck className="h-3.5 w-3.5" />
+          {verifiedLabel(program.lastVerified)}
+          {stale && <span> · may be out of date</span>}
         </span>
       </div>
 
-      <h1 class="text-3xl md:text-4xl font-extrabold mb-2">{program.name}</h1>
+      <h1 class="text-3xl md:text-5xl font-bold tracking-[-0.03em] mb-2">{program.name}</h1>
       {program.organizer && <p class="text-muted-foreground mb-6">{program.organizer}</p>}
 
-      <div class="grid sm:grid-cols-3 gap-4 mb-8">
+      <div class="grid sm:grid-cols-3 gap-px bg-border border border-border mb-10">
         {
           stats.map(({ icon: Icon, label, value }) => (
-            <div class="bg-surface border border-border rounded-lg p-4">
+            <div class="bg-surface p-4">
               <p class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5">
                 <Icon className="h-4 w-4" />
                 {label}
@@ -68,19 +74,17 @@ const sections = [
         }
       </div>
 
-      <p class="text-foreground/80 leading-relaxed mb-8 whitespace-pre-line">
+      <p class="text-subtle leading-relaxed mb-10 whitespace-pre-line">
         {program.longDescription || program.description}
       </p>
 
       {
         program.topics.length > 0 && (
           <section class="mb-8">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-primary mb-3">
-              Topics covered
-            </h2>
+            <h2 class="eyebrow text-primary-text! mb-3">Topics covered</h2>
             <div class="flex flex-wrap gap-2">
               {program.topics.map((t) => (
-                <span class="pill bg-teal-50 text-[var(--accent-dark)] text-[12px]">{t}</span>
+                <span class="border border-border px-3 py-1.5 text-[13px]">{t}</span>
               ))}
             </div>
           </section>
@@ -90,8 +94,8 @@ const sections = [
       {
         sections.map((s) => (
           <section class="mb-8">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-primary mb-3">{s.title}</h2>
-            <p class="text-foreground/80 leading-relaxed whitespace-pre-line">{s.body}</p>
+            <h2 class="eyebrow text-primary-text! mb-3">{s.title}</h2>
+            <p class="text-subtle leading-relaxed whitespace-pre-line">{s.body}</p>
           </section>
         ))
       }
@@ -101,9 +105,9 @@ const sections = [
           href={program.applicationUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="pill bg-accent text-white hover:bg-[var(--accent-dark)] transition-colors px-6 py-3 text-sm font-semibold"
+          class="btn bg-primary text-white hover:bg-foreground hover:text-background"
         >
-          Apply / Learn more →
+          Apply / Learn more <span aria-hidden="true">→</span>
         </a>
       </div>
     </article>

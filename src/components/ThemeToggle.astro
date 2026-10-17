@@ -1,0 +1,38 @@
+---
+import { Moon, Sun } from "lucide-react";
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  class="inline-flex h-9 w-9 items-center justify-center border border-border text-foreground hover:border-primary-text hover:text-primary-text transition-colors cursor-pointer"
+  aria-label="Switch to dark mode"
+>
+  <Moon className="h-4 w-4 dark:hidden" />
+  <Sun className="hidden h-4 w-4 dark:block" />
+</button>
+
+<script>
+  // Base.astro sets data-theme before first paint. This flips it and
+  // remembers the choice; without a saved choice the site follows the OS.
+  const button = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+  const root = document.documentElement;
+
+  function sync() {
+    const dark = root.dataset.theme === "dark";
+    button?.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+  }
+
+  button?.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      // Storage can be blocked; the toggle still works for this page view.
+    }
+    sync();
+  });
+
+  sync();
+</script>

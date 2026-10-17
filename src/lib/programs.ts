@@ -31,40 +31,55 @@ export interface Program {
 
 const DAY_MS = 1000 * 60 * 60 * 24;
 
-export function verifiedAgo(iso: string | null, now = Date.now()): string {
-  if (!iso) return "Not verified";
-  const days = Math.floor((now - new Date(iso).getTime()) / DAY_MS);
-  if (days < 1) return "Verified today";
-  if (days < 7) return `Verified ${days}d ago`;
-  if (days < 30) return `Verified ${Math.floor(days / 7)}w ago`;
-  if (days < 365) return `Verified ${Math.floor(days / 30)}mo ago`;
-  return `Verified ${Math.floor(days / 365)}y ago`;
+// After this many days a verified listing is shown as possibly out of date.
+export const STALE_AFTER_DAYS = 90;
+
+export function verifiedLabel(iso: string | null): string {
+  return iso ? `Verified ${formatDate(iso, true)}` : "Not verified";
+}
+
+export function isStale(iso: string | null, now = Date.now()): boolean {
+  return iso === null || now - new Date(iso).getTime() > STALE_AFTER_DAYS * DAY_MS;
 }
 
 export function isPast(iso: string | null, now = Date.now()): boolean {
   return iso !== null && new Date(iso).getTime() + DAY_MS < now;
 }
 
-// Short label for cards: a date, "Closed", "TBA" when there is a note
-// explaining the missing date, or "Rolling".
-export function deadlineBadge(p: Pick<Program, "deadline" | "deadlineNote">): string {
-  if (!p.deadline) return p.deadlineNote ? "TBA" : "Rolling";
-  if (isPast(p.deadline)) return "Closed";
-  return formatDate(p.deadline);
+export type DeadlineState = "open" | "closed" | "tba" | "rolling";
+
+export function deadlineState(p: Pick<Program, "deadline" | "deadlineNote">): DeadlineState {
+  if (!p.deadline) return p.deadlineNote ? "tba" : "rolling";
+  return isPast(p.deadline) ? "closed" : "open";
+}
+
+// Text for the bar at the bottom of a card.
+export function deadlineCta(p: Pick<Program, "deadline" | "deadlineNote">): string {
+  switch (deadlineState(p)) {
+    case "open":
+      return `Apply by ${formatDate(p.deadline!, false)}`;
+    case "closed":
+      return `Closed ${formatDate(p.deadline!, true)}`;
+    case "tba":
+      return "Dates to be announced";
+    case "rolling":
+      return "Rolling applications";
+  }
 }
 
 // Longer label for the detail page.
 export function deadlineLabel(p: Pick<Program, "deadline" | "deadlineNote">): string {
   if (p.deadlineNote) return p.deadlineNote;
   if (!p.deadline) return "Rolling";
-  return isPast(p.deadline) ? `Closed (${formatDate(p.deadline)})` : formatDate(p.deadline);
+  const date = formatDate(p.deadline, true);
+  return isPast(p.deadline) ? `Closed (${date})` : date;
 }
 
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-US", {
-    month: "short",
+function formatDate(iso: string, withYear: boolean): string {
+  return new Date(iso).toLocaleDateString("en-GB", {
     day: "numeric",
-    year: "numeric",
+    month: "short",
+    year: withYear ? "numeric" : undefined,
     timeZone: "UTC",
   });
 }
