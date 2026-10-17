@@ -1,0 +1,56 @@
+name: Stale check
+
+# Weekly report of listings that need re-checking: never verified, verified
+# too long ago, deadline passed, page unreachable, or page text changed.
+# Results go into a single open issue labeled "stale-check", which is
+# updated each run and closed when nothing is left.
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      # Page hashes from the previous run, used to spot changed pages.
+      - uses: actions/cache/restore@v4
+        with:
+          path: .stale-check-hashes.json
+          key: stale-check-${{ github.run_id }}
+          restore-keys: stale-check-
+
+      - run: node scripts/check-stale.mjs .stale-check-hashes.json > report.md
+
+      - uses: actions/cache/save@v4
+        with:
+          path: .stale-check-hashes.json
+          key: stale-check-${{ github.run_id }}
+
+      - name: Update the stale-check issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create stale-check --color FBCA04 --description "Listings to re-verify" --force
+          issue=$(gh issue list --label stale-check --state open --json number --jq '.[0].number // empty')
+          if [ -s report.md ]; then
+            if [ -n "$issue" ]; then
+              gh issue edit "$issue" --body-file report.md
+            else
+              gh issue create --title "Listings to re-check" --label stale-check --body-file report.md
+            fi
+          elif [ -n "$issue" ]; then
+            gh issue close "$issue" --comment "Every listing is verified and current."
+          fi
