@@ -1,5 +1,5 @@
 name: MIRI Technical Governance Team Research Fellowship
-type: Research Fellowship
+type: Fellowship
 organizer: Machine Intelligence Research Institute (MIRI), Technical Governance Team
 description: >-
   An eight-week research fellowship focused on technical AI governance and
@@ -9,6 +9,6 @@ description: >-
   California, including flights and housing. Applications for the announced
   cohort are closed.
 region: Global
-format: Remote with in-person kickoff
+format: Remote
 deadline: null
 applicationUrl: https://techgov.intelligence.org/blog/announcing-miri-technical-governance-team-research-fellowship
