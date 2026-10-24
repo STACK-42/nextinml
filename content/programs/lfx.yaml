@@ -1,0 +1,20 @@
+
+name: "LFX Mentorship — Machine Learning and AI Projects"
+type: Fellowship
+organizer: "The Linux Foundation"
+description: >-
+  A collection of open-source mentorship opportunities hosted by projects
+  across The Linux Foundation ecosystem. This catalog entry is intended only
+  for projects related to machine learning, artificial intelligence, deep
+  learning, data science, model deployment, and AI infrastructure. Mentees
+  work with experienced open-source contributors on practical technical
+  projects. Mentorship duration, stipend, eligibility, and required weekly
+  commitment depend on the individual project; some mentorships are funded
+  and others are unpaid. Applicants should filter the project catalog for
+  ML/AI-related opportunities and check each project's own application
+  window before applying.
+region: Global
+format: Remote
+deadline: null
+applicationUrl: "https://mentorship.lfx.linuxfoundation.org/#projects_all"
+status: Unknown
