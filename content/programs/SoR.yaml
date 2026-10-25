@@ -10,3 +10,4 @@ region: Global
 format: Remote
 deadline: null
 applicationUrl: https://ucsc-ospo.github.io/sor/
+status: closed

@@ -1,0 +1,22 @@
+
+name: "Outreachy Internships"
+type: Internship
+organizer: "Outreachy / Software Freedom Conservancy"
+description: >-
+  A paid, remote, three-month internship program that helps people from
+  groups underrepresented in technology gain practical experience contributing
+  to free and open-source software. Projects may involve software development,
+  machine learning, data science, user experience, documentation, graphic
+  design, research, and other technical or non-technical areas. Interns work
+  with experienced mentors on real open-source projects and receive a total
+  stipend of $7,000 USD for the internship. Applicants must be at least
+  18 years old, meet Outreachy's eligibility requirements, and be available
+  to work approximately 30 hours per week. Applicants worldwide may apply
+  if they face underrepresentation, systemic bias, or discrimination in
+  their country's technology industry. Previous Outreachy interns and
+  Google Summer of Code interns are not eligible.
+region: Global
+format: Remote
+deadline: "2026-08-31"
+applicationUrl: "https://www.outreachy.org/apply/"
+status: closed
