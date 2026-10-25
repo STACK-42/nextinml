@@ -6,6 +6,8 @@ export type ProgramType = "Summer School" | "Winter School" | "Fellowship" | "In
 
 export type ProgramFormat = "In-person" | "Remote" | "Hybrid";
 
+export type ProgramStatus = "open" | "closed";
+
 export interface Program {
   id: string;
   name: string;
@@ -15,6 +17,7 @@ export interface Program {
   format: ProgramFormat;
   deadline: string | null;
   deadlineNote?: string;
+  status?: ProgramStatus;
   applicationUrl: string;
   lastVerified: string | null;
   organizer?: string;
@@ -68,6 +71,15 @@ export function deadlineState(p: Pick<Program, "deadline" | "deadlineNote">): De
   return isPast(p.deadline) ? "closed" : "open";
 }
 
+export function programStatus(
+  p: Pick<Program, "deadline" | "deadlineNote" | "status">,
+): ProgramStatus {
+  const state = deadlineState(p);
+  if (state === "closed") return "closed";
+  if (p.status) return p.status;
+  return state === "tba" ? "closed" : "open";
+}
+
 // Text for the bar at the bottom of a card.
 export function deadlineCta(p: Pick<Program, "deadline" | "deadlineNote">): string {
   switch (deadlineState(p)) {
@@ -83,9 +95,9 @@ export function deadlineCta(p: Pick<Program, "deadline" | "deadlineNote">): stri
 }
 
 // Longer label for the detail page.
-export function deadlineLabel(p: Pick<Program, "deadline" | "deadlineNote">): string {
+export function deadlineLabel(p: Pick<Program, "deadline" | "deadlineNote" | "status">): string {
   if (p.deadlineNote) return p.deadlineNote;
-  if (!p.deadline) return "Rolling";
+  if (!p.deadline) return programStatus(p) === "closed" ? "Closed" : "Rolling";
   const date = formatDate(p.deadline, true);
   return isPast(p.deadline) ? `Closed (${date})` : date;
 }

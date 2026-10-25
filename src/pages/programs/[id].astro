@@ -4,6 +4,7 @@ import { ArrowLeft, CalendarDays, Clock, Globe, MapPin, ShieldCheck } from "luci
 
 import Base from "@/layouts/Base.astro";
 import Writeups from "@/components/Writeups.astro";
+import { StatusBadge } from "@/components/StatusBadge";
 import { assertWriteupsHavePrograms, getPrograms } from "@/lib/content";
 import { programLd } from "@/lib/seo";
 import { deadlineLabel, isStale, verifiedLabel, type Program } from "@/lib/programs";
@@ -49,7 +50,10 @@ const sections = [
 
     <article>
       <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
-        <span class="type-tag">{program.type}</span>
+        <div class="flex items-center gap-4">
+          <span class="type-tag">{program.type}</span>
+          <StatusBadge program={program} />
+        </div>
         <span
           class:list={[
             "flex items-center gap-1.5 text-[12px]",

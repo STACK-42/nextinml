@@ -1,0 +1,19 @@
+name: "Anthropic STEM Fellowship"
+type: Fellowship
+organizer: Anthropic
+description: >-
+  A four-month, full-time fellowship for experienced researchers in
+  mathematics, physics, life sciences, engineering, and other STEM fields.
+  Fellows collaborate with Anthropic researchers to identify challenging
+  scientific problems, build datasets and simulations, and design rigorous
+  evaluations that test and improve Claude's scientific reasoning. Prior
+  machine learning experience is helpful but not required. Applicants must
+  hold a PhD in a STEM field and have several years of relevant experience,
+  use Claude and Claude Code in their workflow, and have US work
+  authorization. The program includes an in-person orientation in
+  San Francisco; remote participation may be considered within the US.
+region: Americas
+format: Hybrid
+deadline: "2026-10-28"
+applicationUrl: "https://job-boards.greenhouse.io/anthropic/jobs/5452403008"
+status: open

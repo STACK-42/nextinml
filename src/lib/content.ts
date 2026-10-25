@@ -1,6 +1,6 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 
-import type { Program } from "./programs";
+import { programStatus, type Program } from "./programs";
 
 function isoDate(d: Date | null | undefined): string | null {
   return d ? d.toISOString().slice(0, 10) : null;
@@ -42,8 +42,7 @@ export async function assertWriteupsHavePrograms(programs: Program[]) {
 // rolling or unannounced ones, then closed ones.
 export async function getPrograms(): Promise<Program[]> {
   const entries = await getCollection("programs", (e) => !e.data.draft);
-  const today = new Date().toISOString().slice(0, 10);
-  const rank = (p: Program) => (p.deadline === null ? 1 : p.deadline < today ? 2 : 0);
+  const rank = (p: Program) => (programStatus(p) === "closed" ? 2 : p.deadline === null ? 1 : 0);
   return entries.map(toProgram).sort((a, b) => {
     const r = rank(a) - rank(b);
     if (r !== 0) return r;

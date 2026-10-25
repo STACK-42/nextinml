@@ -18,6 +18,9 @@ export const programRegions = [
   "Americas",
 ] as const;
 
+// for the program status
+export const programStatuses = ["Open", "Closed", "Unknown"] as const;
+
 const programs = defineCollection({
   loader: glob({ pattern: "**/*.yaml", base: "./content/programs" }),
   schema: z.object({
@@ -31,6 +34,10 @@ const programs = defineCollection({
     // null means rolling or not announced; use deadlineNote to say which.
     deadline: z.coerce.date().nullable(),
     deadlineNote: z.string().optional(),
+    // Open or closed is worked out from the deadline. Set this only to
+    // override that, e.g. "closed" for a rolling listing whose call has ended.
+    // A deadline in the past is always closed, whatever this says.
+    status: z.enum(["open", "closed"]).optional(),
     applicationUrl: z.url(),
     // The date someone last checked this listing against the program's own page.
     // Leave it out until that has happened.

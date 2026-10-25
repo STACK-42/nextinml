@@ -1,0 +1,20 @@
+name: "Anthropic Fellows Program — AI Safety & Security"
+type: Fellowship
+organizer: Anthropic
+description: >-
+  A four-month, full-time fellowship supporting empirical research into
+  AI safety, alignment, robustness, interpretability, and AI security.
+  Research areas include scalable oversight, adversarial robustness,
+  AI control, understanding model internals, and security vulnerabilities
+  in AI systems. Fellows receive mentorship from researchers, compute and
+  research funding, and a weekly stipend. Candidates should have strong
+  Python skills and a technical background; relevant experience in empirical
+  ML research, large language models, AI safety, or open-source security
+  projects can be beneficial. Applicants must have full-time work
+  authorization and be located in the United States, United Kingdom, or
+  Canada during the program.
+region: Americas
+format: Remote
+deadline: "2026-10-30"
+applicationUrl: "https://job-boards.greenhouse.io/anthropic/jobs/5183044008"
+status: open

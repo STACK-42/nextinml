@@ -1,0 +1,19 @@
+name: "Anthropic Fellows Program — ML Systems & Performance"
+type: Fellowship
+organizer: Anthropic
+description: >-
+  A four-month, full-time research and engineering fellowship focused on
+  building and improving infrastructure for advanced machine learning.
+  Projects may involve accelerator workload simulators, additional hardware
+  backends, on-demand research infrastructure, and complex synthetic-data
+  or environment pipelines. Fellows receive mentorship from Anthropic
+  researchers, funding for compute and research expenses, and a weekly
+  stipend. Strong Python programming, software engineering, and familiarity
+  with ML systems, distributed computing, or model training are valuable.
+  Applicants must have full-time work authorization and be located in the
+  United States, United Kingdom, or Canada during the program.
+region: Americas
+format: Remote
+deadline: "Rolling applications — next cohort expected January 2027"
+applicationUrl: "https://job-boards.greenhouse.io/anthropic/jobs/5183051008"
+status: open

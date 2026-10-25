@@ -1,21 +1,16 @@
+import { StatusBadge } from "@/components/StatusBadge";
 import type { Program } from "@/lib/programs";
-import { deadlineCta, deadlineState, isStale, verifiedLabel } from "@/lib/programs";
+import { deadlineCta, programStatus } from "@/lib/programs";
 
 export function ProgramCard({ program }: { program: Program }) {
   const href = `/programs/${program.id}/`;
-  const open = deadlineState(program) === "open";
-  const stale = isStale(program.lastVerified);
+  const open = programStatus(program) === "open";
 
   return (
     <article className="group bg-surface border border-border p-5 flex flex-col gap-2.5 transition-colors hover:border-primary-text">
       <div className="flex items-center justify-between gap-3">
         <span className="type-tag">{program.type}</span>
-        <span
-          className={`text-[11px] ${stale ? "text-vermilion" : "text-muted-foreground"}`}
-          title={stale ? "This listing may be out of date" : undefined}
-        >
-          {verifiedLabel(program.lastVerified)}
-        </span>
+        <StatusBadge program={program} />
       </div>
 
       <h3 className="text-[17px] font-semibold leading-snug tracking-normal">
