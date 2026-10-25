@@ -19,11 +19,7 @@ export const programRegions = [
 ] as const;
 
 // for the program status
-export const programStatuses = [
-  "Open",
-  "Closed",
-  "Unknown",
-] as const;
+export const programStatuses = ["Open", "Closed", "Unknown"] as const;
 
 const programs = defineCollection({
   loader: glob({ pattern: "**/*.yaml", base: "./content/programs" }),

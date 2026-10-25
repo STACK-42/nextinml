@@ -42,7 +42,8 @@ export async function assertWriteupsHavePrograms(programs: Program[]) {
 // rolling or unannounced ones, then closed ones.
 export async function getPrograms(): Promise<Program[]> {
   const entries = await getCollection("programs", (e) => !e.data.draft);
-  const rank = (p: Program) => (programStatus(p) === "closed" ? 2 : p.deadline === null ? 1 : 0);  return entries.map(toProgram).sort((a, b) => {
+  const rank = (p: Program) => (programStatus(p) === "closed" ? 2 : p.deadline === null ? 1 : 0);
+  return entries.map(toProgram).sort((a, b) => {
     const r = rank(a) - rank(b);
     if (r !== 0) return r;
     return (a.deadline ?? "").localeCompare(b.deadline ?? "") || a.name.localeCompare(b.name);
